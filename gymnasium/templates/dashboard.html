@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+
+{% block body %}
+<p>Hoş geldiniz. {{session["adSoyad"]}} Veri Tabanı Adı: {{session["dbAdi"]}}</p>
+<hr>
+
+<button type="button" class="btn btn-success">Anasayfa</button>
+<a href="/dashboard/kulup"><button type="button" class="btn btn-success">Kulüp Bilgilerini Gir</button></a>
+<a href="/dashboard/ogrenci_kaydet"><button type="button" class="btn btn-success">Öğrenci Kaydet</button></a>
+<a href="/dashboard/ogrenci_listesi"><button type="button" class="btn btn-success">Öğrenci Listesi</button></a>
+<button type="button" class="btn btn-success">Salon Takip</button>
+<button type="button" class="btn btn-success">Maç Takip</button>
+
+<hr>
+
+
+{% endblock body %}

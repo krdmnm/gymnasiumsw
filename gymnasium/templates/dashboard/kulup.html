@@ -1,0 +1,281 @@
+{% extends "index.html" %}
+
+{% block body %}
+<div class="container">
+<br>
+<!-- 1. satırda 2 sütun antrenör işlemleri başlıyor -->
+<div class="row">
+    <div class="col">
+
+        <form method="post" action="{{url_for('kulup_islem', islem='ekle', tablo='antrenor', id = 0)}}" class="form-signin">
+
+        <label for="colFormLabel" class="col-sm-2 col-form-label">Antrenör Adı Soyadı</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="antrenorAdSoyad" id="inputantrenorAdi" placeholder="Antrenörün adını ve soyadını giriniz">
+        </div>  
+
+        <label for="colFormLabel" class="col-sm-2 col-form-label">Antrenör Kullanıcı Adı</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="antrenorUserName" id="inputantrenorUserName" placeholder="Sisteme giriş yaparken gerekli kullanıcı adı">
+        </div> 
+
+         <label for="colFormLabel" class="col-sm-2 col-form-label">Antrenör Şifresi</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="antrenorPassword" id="inputantrenorPassword" placeholder="Sisteme giriş yaparken gerekli şifre">
+        </div>
+
+        <br>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submitBtn">Antrenör Ekle</button>
+
+        </form>
+
+    </div>
+
+    <!-- antrenör listeleme sütunu  -->
+    <div class="col">
+
+        <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Antrenör Adı Soyadı</th>
+          <th scope="col">Antrenör Kullanıcı Adı</th>
+          <th scope="col">Antrenör Şifresi</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+        <tbody>
+          <tr>
+          {% if antrenorler == False %}
+            <td>Henüz Antrenör Eklenmemiş</td>
+          {% else %}
+          {% for antrenor in antrenorler  %}
+            <tr>
+            <form method="post" action = "{{url_for('kulup_islem', islem='edit', tablo='antrenor', id=antrenor.id)}}">
+            <td><input type="text" class="form-control" name="antrenorAdSoyad" id="inputAntrenorAdSoyad" value="{{antrenor.antrenorAdSoyad}}"></td>
+            <td><input type="text" class="form-control" name="antrenorUserName" id="inputAntrenorUserName" value="{{antrenor.antrenorUserName}}"></td>
+            <td><input type="text" class="form-control" name="antrenorPassword" id="inputAntrenorPassword" value="{{antrenor.antrenorPassword}}"></td>
+            <td><button type="submit" class="btn btn-primary">Düzenle</button></a>
+            </form>
+            <td><a href="{{url_for('kulup_islem', islem='delete', tablo='antrenor', id=antrenor.id)}}"><button type="button" class="btn btn-danger">Sil</button></a></td>
+            </tr>
+           {% endfor %}
+          {% endif %}
+            </tr>
+          </tbody>
+          </thead>
+        </table>
+
+    </div>
+
+</div>
+<!-- 1. satırda 2 sütun antrenör işlemleri başlıyor -->
+
+<hr>
+
+<!-- 2. satırda 2 sütun branş işlemleri başlıyor -->
+<div class="row">
+    <!-- Branş ekleme formu -->
+    <div class="col">
+    <form method="post" action="{{url_for('kulup_islem', islem='ekle', tablo='branslar', id=0)}}" class="form-signin">
+
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Branş Adı</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="bransAdi" id="inputBransAdi" placeholder="Örn. Basketbol ve ya Voleybol">
+      </div>
+
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Açıklama</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="bransAciklama" id="inputBransAciklama" placeholder="Branş ile ilgili açıklama">
+      </div>
+      <br>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" name="submitBtn">Branş Ekle</button>
+    </form>
+    </div>
+
+    <!-- branş listeleme tablosu -->
+    <div class="col">
+        <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Branş Adı</th>
+            <th scope="col">Branş Açıklaması</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          <tbody>
+          <tr>
+            {% if branslar == False %}
+            <td>Henüz Branş Eklenmemiş</td>
+            {% else %}
+              {% for brans in branslar  %}
+              <tr>
+              <form method="post" action="{{url_for('kulup_islem', islem='edit', tablo='branslar', id= brans.id)}}">
+              <td><input type="text" class="form-control" name="bransAdi" id="inputbransAdi" value="{{brans.bransAdi}}"></td>
+              <td><input type="text" class="form-control" name="bransAciklama" id="inputbransAciklama" value="{{brans.bransAciklama}}"></td>
+              <td><button type="submit" class="btn btn-primary">Düzenle</button></td>
+              </form>
+              <td><a href="{{url_for('kulup_islem', islem='delete', tablo='branslar', id = brans.id)}}"><button type="button" class="btn btn-danger">Sil</button></a></td>
+              </tr>
+              {% endfor %}
+            {% endif %}
+          </tr>
+          </tbody>
+        </thead>
+      </table>
+    </div>
+
+</div>    
+<!-- 2. satır branş işlemleri bitti -->
+<hr>
+<!-- 3. satırda 2 sütun grup işlemleri başlıyor -->
+<div class="row">
+    <!-- Grup ekleme formu -->
+    <div class="col">
+    <form method="post" action="{{url_for('kulup_islem', islem='ekle', tablo='gruplar', id=0)}}" class="form-signin">
+
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Grup Adı</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="grupAdi" id="inputGrupAdi" placeholder="Örn. 2011 - 2012">
+      </div>
+
+      <label class="col-sm-2 col-form-label" for="colFormLabel">Grup Branşı</label>
+      <div class="col-sm-10">
+        <select class="form-select" name="grupBransi" id="inputGrupBransi">
+        {% if branslar == False %}
+          <option selected>Henüz Branş eklenmemiş</option>
+        {% else %}
+          <option selected>Lütfen Branş Seçin</option>
+          {% for brans in branslar  %}
+            <option value="{{brans.bransAdi}}">{{brans.bransAdi}}</option>
+          {% endfor %}
+        {% endif %}
+        </select>
+      </div>
+
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Açıklama</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="grupAciklama" id="inputGrupAciklama" placeholder="Grup ile ilgili açıklama">
+      </div>
+      <br>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" name="submitBtn">Grup Ekle</button>
+    </form>
+    </div>
+
+    <!--- grup lsiteleme tablosu başlıyor --->
+    <div class="col">
+
+        <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Grup Adı</th>
+            <th scope="col">Grup Branşı</th>
+            <th scope="col">Grup Açıklaması</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          <tbody>
+          <tr>
+            {% if gruplar == False %}
+            <td>Henüz Grup Eklenmemiş</td>
+            {% else %}
+              {% for grup in gruplar  %}
+              <tr>
+              <form method="post" action="{{url_for('kulup_islem', islem='edit', tablo='gruplar', id=grup.id)}}">
+              <td><input type="text" class="form-control" name="grupAdi" id="inputgrupAdi" value="{{grup.grupAdi}}"></td>
+              <td>
+                      <select class="form-select" name="grupBransi" id="inputGrupBransi">
+                      {% if branslar == False %}
+                        <option selected>Henüz Branş eklenmemiş</option>
+                      {% else %}
+                        <option selected>{{grup.grupBransi}}</option>
+                        {% for brans in branslar  %}
+                          <option value="{{brans.bransAdi}}">{{brans.bransAdi}}</option>
+                        {% endfor %}
+                      {% endif %}
+                      </select>
+              </td>
+              <td><input type="text" class="form-control" name="grupAciklama" id="inputgrupAciklama" value="{{grup.grupAciklama}}"></td>
+              <td><button type="submit" class="btn btn-primary">Düzenle</button></td>
+              </form>
+              <td><a href="{{url_for('kulup_islem', islem='delete', tablo='gruplar', id = grup.id)}}"><button type="button" class="btn btn-danger">Sil</button></a></td>
+              </tr>
+              {% endfor %}
+            {% endif %}
+          </tr>
+          </tbody>
+        </thead>
+      </table>
+
+    </div>
+
+</div>
+<!-- 3. satırda 2 sütun grup işlemleri bitti -->
+<hr>
+<!-- 4. satırda 2 sütun salon işlemleri başlıyor -->
+<div class="row">
+    <!-- salon ekleme formu -->
+    <div class="col">
+    <form method="post" action="{{url_for('kulup_islem', islem='ekle', tablo='salonlar', id=0)}}" class="form-signin">
+
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Salon Adı</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="salonAdi" id="inputSalonAdi" placeholder="Örn. Basketbol salonu veya 1 Nolu salon">
+      </div>
+
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Salon Tipi</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="salonTipi" id="inputSalonTipi" placeholder="Örn. Basketbol salonu veya Voleybol salonu">
+      </div>
+
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Açıklama</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="salonAciklama" id="inputSalonAciklama" placeholder="Salon ile ilgili açıklama">
+      </div>
+      <br>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" name="submitBtn">Salon Ekle</button>
+    </form>
+    </div>
+    <!-- Salon listeleme tablosu -->
+    <div class="col">
+        <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Salon Adı</th>
+            <th scope="col">Salon Tipi</th>
+            <th scope="col">Salon Açıklaması</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          <tbody>
+          <tr>
+            {% if salonlar == False %}
+            <td>Henüz Salon Eklenmemiş</td>
+            {% else %}
+              {% for salon in salonlar  %}
+              <tr>
+              <form method="post" action="{{url_for('kulup_islem', islem='edit', tablo='salonlar', id=salon.id)}}">
+              <td><input type="text" class="form-control" name="salonAdi" id="inputsalonAdi" value="{{salon.salonAdi}}"></td>
+              <td><input type="text" class="form-control" name="salonTipi" id="inputsalonTipi" value="{{salon.salonTipi}}"></td>
+              <td><input type="text" class="form-control" name="salonAciklama" id="inputsalonAciklama" value="{{salon.salonAciklama}}"></td>
+              <td><button type="submit" class="btn btn-primary">Düzenle</button></td>
+              </form>
+              <td><a href="{{url_for('kulup_islem', islem='delete', tablo='salonlar', id = salon.id)}}"><button type="button" class="btn btn-danger">Sil</button></a></td>
+              </tr>
+              {% endfor %}
+            {% endif %}
+          </tr>
+          </tbody>
+        </thead>
+      </table>
+    </div>
+</div>
+<hr>
+<!-- 4. satırda 2 sütun salon işlemleri bitti -->
+</div>
+
+{% endblock body %}
