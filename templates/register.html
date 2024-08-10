@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block body %}
+{% from "includes/formhelpers.html" import render_field %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col">
+        <hr>
+            <img class="" src="" alt="" width="72" height="72">
+            <form class="form-signin" method="post">
+                {{render_field(form.adSoyad, class="form-control")}}
+                {{render_field(form.telefon, class="form-control")}}
+                {{render_field(form.ePosta, class="form-control")}}
+                {{render_field(form.userName, class="form-control")}}
+                {{render_field(form.password, class="form-control")}}
+                {{render_field(form.kulupAdi, class="form-control")}}
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Kayıt Ol</button>
+            </form>
+        <hr>
+        </div>
+
+        <div class="col">
+        </div>
+
+        <div class="col">
+        </div>
+        
+    </div>
+
+</div>
+
+
+{% endblock body %}

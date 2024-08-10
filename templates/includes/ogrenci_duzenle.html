@@ -1,0 +1,32 @@
+{% from "includes/formhelpers.html" import render_field %}
+<hr>
+
+<form method="post" enctype="multipart/form-data" action="{{url_for('ogrenci_islem', islem='duzenle', id=ogrenci.id)}}">
+<div class="row">
+    <div class="col">
+      {{render_field(form.ogrenciFoto, class="form-control")}}
+      {{render_field(form.ogrenciTC, class="form-control")}}
+      {{render_field(form.ogrenciAd, class="form-control")}}
+      {{render_field(form.ogrenciSoyad, class="form-control")}}
+      {{render_field(form.ogrenciTelefon, class="form-control")}}
+    </div>
+    <div class="col">
+      {{render_field(form.ogrenciYas, class="form-control")}}
+      {{render_field(form.ogrenciDogumTarihi, class="form-control")}}
+      {{render_field(form.ogrenciBrans, class="form-control")}}
+      {{render_field(form.ogrenciGrup, class="form-control")}}
+      {{render_field(form.toplamOdeme, class="form-control")}}
+      
+    </div>
+    <div class="col">
+      {{render_field(form.veliAd, class="form-control")}}
+      {{render_field(form.veliTelefon, class="form-control")}}
+      {{render_field(form.veli2Ad, class="form-control")}}
+      {{render_field(form.veli2Telefon, class="form-control")}}
+      {{render_field(form.ilkOdemeTarihi, class="form-control")}}
+    </div>
+</div>
+<div class="text-center">
+      <button type="submit" class="btn btn-primary">Düzenle</button>
+</div>
+</form>

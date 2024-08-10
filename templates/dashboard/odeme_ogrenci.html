@@ -1,0 +1,95 @@
+{% extends "index.html" %}
+
+{% block body %}
+{% from "includes/formhelpers.html" import render_field %}
+<br>
+
+<div class="container">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Öğrenci</th>
+      <th scope="col">Toplam Ödenen</th>
+      <th scope="col">Kalan Ödeme</th>
+      <th scope="col">Toplam Ödenecek</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% if genelOdeme != False %}
+    <tr>
+      <th scope="row"><h3>{{ogrenci.ogrenciAd}} {{ogrenci.ogrenciSoyad}}</h3></th>
+      <td>{{genelOdeme.toplamOdenen}}</td>
+      <td>{{genelOdeme.kalanOdeme}}</td>
+      <td>{{genelOdeme.toplamOdeme}}</td>
+    </tr>
+  {% else %}
+    <p>Ödeme Bilgisi bulunamadı</p>
+  {% endif %}
+  </tbody>
+
+</table>
+</div>
+<hr>
+
+
+<form method="post" action="{{url_for('odeme_ogrenci', islem='odeme_al', id=ogrenci.id)}}">
+<div class="row">
+
+    <div class="col">
+    {{render_field(form.odemeMiktari, class="form-control")}}
+    </div>
+
+    <div class="col">
+    {{render_field(form.odemeTarihi, class="form-control")}}
+    </div>
+
+    <div class="col">
+    {{render_field(form.odemeyiYapan,class="form-control")}}
+    </div>
+
+    <div class="col">
+    <button style="margin-top:23px" class="btn btn-primary" type="submit">Ödeme Al</button>
+    </div>
+
+</div>
+</form>
+
+<hr>
+
+<div class="container">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Öğrenci</th>
+      <th scope="col">Ödeme Tarihi</th>
+      <th scope="col">Ödeme Miktarı</th>
+      <th scope="col">Ödemeyi Yapan</th>
+      <th scope="col">Ödemeyi Alan</th>
+      <th scope="col">Sonraki Ödeme</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% if odemeler != False %}
+    {% for odeme in odemeler %}
+    <tr>
+      <th scope="row">{{odeme.ogrenciAdSoyad}}</th>
+      <td>{{odeme.islemTarihi}}</td>
+      <td>{{odeme.odemeMiktari}}</td>
+      <td>{{odeme.odemeyiYapan}}</td>
+      <td>{{odeme.odemeyiAlan}}</td>
+      <td>{{odeme.sonrakiOdemeTarihi}}</td>
+      <td><form method="post" action="{{url_for('odeme_ogrenci', islem='odeme_sil', id=ogrenci.id)}}"><button class="btn btn-danger" name="odeme_sil" value="{{odeme.id}}">Sil</button></form></td>
+    </tr>
+    {% endfor %}
+  {% else %}
+    <p>Henüz ödeme yapılmamış</p>
+  {% endif %}
+  </tbody>
+
+</table>
+</div>
+{% endblock body %}

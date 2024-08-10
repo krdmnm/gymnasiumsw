@@ -1,0 +1,100 @@
+{% extends "index.html" %}
+
+{% block body %}
+
+<!-- Bu alan arama çubuğu için ------>
+<table class="table">
+<thead>
+<form method="post">
+    <tr>
+      <th scope="col"><select class="form-select" name="branslar" aria-label="Default select example">
+      {% if branslar %}
+        <option selected value="ogrenciBrans">Bütün branşlar</option>
+        {% for brans in branslar %}
+          <option value="{{brans.bransAdi}}">{{brans.bransAdi}}</option>
+        {% endfor %}
+      {% else %}
+        <option selected value="ogrenciBrans">Henüz branş eklenmemiş</option>
+      {% endif %}
+      </select></th>
+        
+      
+      <th scope="col"><select class="form-select" name="gruplar" aria-label="Default select example">
+      {% if gruplar %}
+        <option selected value="ogrenciGrup">Bütün gruplar</option>
+          {% for grup in gruplar %}
+          <option value="{{grup.grupAdi}}">{{grup.grupAdi}}/{{grup.grupBransi}}</option>
+        {% endfor %}
+      {% else %}
+        <option selected value="ogrenciGrup">Henüz grup eklenmemiş</option>
+      {% endif %}
+        
+
+      </select></th>
+      <th scope="col"><button class="btn btn-danger" type="submit" id="button-addon2">Filtrele</button></th>
+      <th scope="col"><select class="form-select" name="searchBy" aria-label="Default select example">
+        <option selected value="ogrenciAd">Öğrencinin adına göre</option>
+        <option value="ogrenciSoyad">Soyadına göre</option>
+        <option value="veliAd">Veli Ad Soyadına göre</option>
+        </select></th>
+      
+      <th scope="col"><div class="input-group mb" style="margin-bottom: 0px">
+        <input type="text" class="form-control" name="keyword" placeholder="Öğrenci adı,soyadı veya veli adı" aria-label="Arama sözcüğü" aria-describedby="button-addon2">
+        <button class="btn btn-primary" type="submit" id="button-addon2">Ara</button></div></th>
+           
+      <th scope="col"><a href="{{url_for('ogrenci_listesi')}}"><button class="btn btn-primary" type="button" id="button-addon2">Sıfırla</button></a></th>
+      
+      <th scope="col"><button class="btn btn-danger" type="button" id="button-addon2">Seçilenleri sil</button></th>
+    </tr>
+</form>
+</thead>
+</table>
+<!-- Arama çubuğu için alan sonu ------>
+
+<!-- Burası öğrencileri sırasıyla listeleyecek--->
+
+<table class="table">
+  <thead>
+  
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Ad Soyad</th>
+      <th scope="col">Yaş</th>
+      <th scope="col">Branş</th>
+      <th scope="col">Grup</th>
+      <th scope="col">Telefon No</th>
+      <th scope="col">Doğum Tarihi</th>
+      <th scope="col">Veli</th>
+      <th scope="col">Veli Tel No</th>
+      <th scope="col"></th>
+    </tr>
+
+  </thead>
+
+
+  <tbody>
+  {% if ogrenciler %}
+    {% for ogrenci in ogrenciler %}
+    <tr>
+      <th scope="row"><input class="form-check-input" type="checkbox" value="{{ogrenci.id}}" id="flexCheckDefault"></th>
+      <td>{{ogrenci.ogrenciAd}} {{ogrenci.ogrenciSoyad}}</td>
+      <td>{{ogrenci.ogrenciYas}}</td>
+      <td>{{ogrenci.ogrenciBrans}}</td>
+      <td>{{ogrenci.ogrenciGrup}}</td>
+      <td>{{ogrenci.ogrenciTelefon}}</td>
+      <td>{{ogrenci.ogrenciDogumTarihi}}</td>
+      <td>{{ogrenci.veliAd}}</td>
+      <td>{{ogrenci.veliTelefon}}</td>
+      <td><a href="{{ url_for('odeme_ogrenci', islem='odeme', id=ogrenci.id) }}"><button class="btn btn-success" name="pay" type="button" id="button-addon2" value="{{ogrenci.id}}">Ödeme Al</button></a>
+      <a href="{{ url_for('ogrenci_islem', islem='goruntule', id=ogrenci.id) }}"><button class="btn btn-primary" name="edit" type="button" id="button-addon2" value="{{ogrenci.id}}">Görüntüle</button></a>
+      <a href="{{ url_for('ogrenci_islem', islem='delete', id=ogrenci.id) }}"><button class="btn btn-danger" name="delete" type="button" id="button-addon2" value="{{ogrenci.id}}">Sil</button></a></td>
+    </tr>
+  {% endfor %}
+  {% else %}
+    <tr>Henüz öğrenci eklenmemiş</tr>
+  {% endif %}
+
+  </tbody>
+</table>
+
+{% endblock body %}

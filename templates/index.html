@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <! Burada bootstrap stylesheet ekleyelim.>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}" >
+    
+    <title>GymnasiumSW</title>
+</head>
+
+<body>
+{% include "/navbar.html" %}
+{% include "/includes/messages.html" %}
+
+<div class="wrapper" style="min-height: 81vh; display:flex; flex-direction: column;">
+<div class = "container">
+    {% block body %}
+
+
+        {% include "/slider.html" %}
+
+    
+    {% endblock body %}
+</div>
+</div>
+
+<br>
+<div class="footer">
+    {% include "/footer.html" %}
+</div>
+
+<!Burada ise bootstrapleri etkinleştirelim..>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>
